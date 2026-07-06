@@ -4,8 +4,8 @@ require('dotenv').config()
 //import all required things
 const express = require('express')
 const cors = require('cors')
-require('./config/db')
-const routes=require('./routes/allRoutes')
+require('./src/config/db')
+const routes=require('./src/routes/allRoutes')
 
 //create server using express
 const server =express()
