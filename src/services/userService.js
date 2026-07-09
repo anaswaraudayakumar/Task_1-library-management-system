@@ -62,7 +62,7 @@ async function updateUserByAdmin(id,userData){
     role:userData.role
 
   }
-  const updatedUser = await updateUserById(id,updateData,{new:true})
+  const updatedUser = await updateUserById(id,updateData)
   return updatedUser
   
 }
@@ -77,16 +77,7 @@ async function getAllUsers(query){
 }
 
 
-//get all user by role service 
-// async function getAllUserByRole(role){
-//   console.log("Inside the  getAllUserController")
-//   const allUser = await getAll(role) 
-//   if(!allUser){
-//     throw new Error("There is no such user")
-//   }
-//   return allUser 
-  
-// }
+
 
 
 
