@@ -16,6 +16,11 @@ const MESSAGES= {
     UPDATE_SUCCESS:"Updated successfully",
     //authorization 
     AUTH_FAIL :"Authorization failed.... Please Login ",
-    INV_TOKEN:"Invalid Token.. Please Login"
+    INV_TOKEN:"Invalid Token.. Please Login",
+
+    //author
+    AUTHOR_CRE_SUCCESS :"Author details added successfully",
+    AUTHOR_GET_ALL:"Author details "
+
 }
 module.exports = MESSAGES;
