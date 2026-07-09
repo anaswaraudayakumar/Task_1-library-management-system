@@ -1,7 +1,7 @@
 const { hashPassword, comparePassword } = require("../utility/encrypt");
 const { register, findByEmail, updateUserById, getAll ,getOneById } = require("../repositories/userRepository");
 const jwt = require("jsonwebtoken");
-const { findById } = require("../models/userModel");
+
 
 async function registerUser(userData) {
   const { name, role, email, password } = userData;
