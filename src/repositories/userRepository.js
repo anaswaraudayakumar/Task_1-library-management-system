@@ -12,7 +12,7 @@ async function findByEmail(email){
 }
 // get user by id
 async function getOneById(id){
-     const getOneUserById = await User.findById(id)
+    const getOneUserById = await User.findById(id)
     return getOneUserById
 
 }
