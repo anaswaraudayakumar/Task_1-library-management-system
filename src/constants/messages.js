@@ -2,7 +2,7 @@
 
 const MESSAGES= {
     //success
-    REGISTER_SUCCESS : "User Registered Successfully",
+    REGISTER_SUCCESS : "Registered Successfully",
     LOGIN_SUCCESS :"User Logined Successfully",
 
     //validator messages
@@ -10,7 +10,10 @@ const MESSAGES= {
     NOT_FOUND:"cannot find the user",
     INVALID_MAIL:"Invalid Email format",
     INVALID_PASSWORD:"password must have 6 charecters ",
+    
 
+    //updation response messages
+    UPDATE_SUCCESS:"Updated successfully",
     //authorization 
     AUTH_FAIL :"Authorization failed.... Please Login ",
     INV_TOKEN:"Invalid Token.. Please Login"
