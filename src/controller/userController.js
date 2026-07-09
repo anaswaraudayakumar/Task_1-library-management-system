@@ -6,7 +6,7 @@ async function registerController(req, res) {
   console.log("Inside register controller");
   try {
     const user = await registerUser(req.body);
-    res.status(status_codes.OK).json({
+    res.status(STATUS_CODES.CREATE).json({
       success: true,
       message: MESSAGES.REGISTER_SUCCESS,
     });
