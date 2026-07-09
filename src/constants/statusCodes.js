@@ -6,4 +6,4 @@ const STATUS_CODES={
     INTERNAL_SERVER_ERROR:500
 }
 
-module.exports = status_codes
+module.exports = STATUS_CODES
