@@ -13,9 +13,6 @@ async function findAuthors(query) {
     filter.nationality = query.nationality;
   }
   //filter using name
-  if (query.name) {
-    filter.name = query.name;
-  }
   const allAuthor = await Author.findOne(filter);
   return allAuthor;
 }
