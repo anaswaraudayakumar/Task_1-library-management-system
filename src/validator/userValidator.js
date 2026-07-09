@@ -1,5 +1,5 @@
 const MESSAGES = require("../constants/messages")
-const {userType,password_min_length, emailRegex} = require("../constants/constants")
+const {USERTYPES,PASSWORD_MIN_LENGTH, EMAILREGEX} = require("../constants/constants")
 const STATUS_CODES = require("../constants/messages")
 
 function registerValidation(req,res,next){
@@ -11,19 +11,19 @@ function registerValidation(req,res,next){
     //role
     if(role){
         req.body.role = role.toLowerCase()
-        if(!userType.includes(req.body.role)){
+        if(!USERTYPES.includes(req.body.role)){
         return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.NOT_FOUND) 
         }
     }
     //email regex checking 
     
     
-    if(!emailRegex.test(email)){
+    if(!EMAILREGEX.test(email)){
         return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.INVALID_MAIL)
     }
     
     //password validation
-    if(password.length<password_min_length){
+    if(password.length<PASSWORD_MIN_LENGTH){
         return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.INVALID_PASSWORD) 
 
     }
@@ -41,7 +41,7 @@ function loginValidation(req,res,next){
      //email regex checking 
     
   
-    if(!emailRegex.test(email)){
+    if(!EMAILREGEX.test(email)){
         return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.INVALID_MAIL)
     }
     

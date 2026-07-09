@@ -11,7 +11,13 @@ userRoute.post('/login',userValidator.loginValidation,userController.loginContro
 
 // //alluser
 // userRoute.get('/allUser')
-userRoute.get('/allUsers',adminMiddleware)
+userRoute.get('/',adminMiddleware,userController.getAllUserController)
+
+
+//edit 
+
+
+userRoute.put('/:id',adminMiddleware,userController.userEditController)
 
 // //deleteuser 
 // userRoute.delete('/:id',)

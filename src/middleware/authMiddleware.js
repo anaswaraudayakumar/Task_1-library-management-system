@@ -3,7 +3,7 @@ const MESSAGES= require("../constants/messages")
 const STATUS_CODES= require("../constants/statusCodes")
 
 function authMiddleware(req,res,next){
-    const token = req.headers.authorization
+    const token = req.headers.authorization.split(" ")[1];
     console.log(token);
     if(token){
         try{
@@ -24,3 +24,4 @@ function authMiddleware(req,res,next){
     
 
 }
+module.exports = authMiddleware

@@ -1,6 +1,7 @@
 const { hashPassword, comparePassword } = require("../utility/encrypt");
-const { register, findByEmail } = require("../repositories/userRepository");
+const { register, findByEmail, updateUserById, getAll ,getOneById } = require("../repositories/userRepository");
 const jwt = require("jsonwebtoken");
+const { findById } = require("../models/userModel");
 
 async function registerUser(userData) {
   const { name, role, email, password } = userData;
@@ -48,4 +49,45 @@ async function loginUser(userData) {
   }
   return userInfo
 }
-module.exports = { registerUser, loginUser };
+
+// function for user edit by admin 
+async function updateUserByAdmin(id,userData){
+  console.log("inside the updateUser");
+  const user = await getOneById(id)
+  if(!user){
+    throw new Error("User not Found")
+  }
+  const updateData = {
+    name:userData.name,
+    role:userData.role
+
+  }
+  const updatedUser = await updateUserById(id,updateData,{new:true})
+  return updatedUser
+  
+}
+async function getAllUsers(query){
+  console.log("Inside the  getAllUserController")
+  const allUser = await getAll(query) 
+  if(!allUser.length){
+    throw new Error("There is no such user")
+  }
+  return allUser 
+  
+}
+
+
+//get all user by role service 
+// async function getAllUserByRole(role){
+//   console.log("Inside the  getAllUserController")
+//   const allUser = await getAll(role) 
+//   if(!allUser){
+//     throw new Error("There is no such user")
+//   }
+//   return allUser 
+  
+// }
+
+
+
+module.exports = { registerUser, loginUser,updateUserByAdmin ,getAllUsers};

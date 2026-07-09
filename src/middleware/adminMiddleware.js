@@ -2,15 +2,15 @@ const jwt = require("jsonwebtoken");
 const STATUS_CODES = require("../constants/statusCodes");
 const MESSAGES = require("../constants/messages");
 
-function authMiddleware(req, res, next) {
-  const token = req.headers.authorization;
-  console.log(token);
+function adminMiddleware(req, res, next) {
+  const token = req.headers.authorization.split(" ")[1];
+  // console.log(token);
   if (token) {
     try {
       const jwtResponse = jwt.verify(token, process.env.JWT_SECRET);
       console.log(jwtResponse);
-      req.payload = jwtResponse.email;
-      const role = jwtResponse.role;
+      // req.payload = jwtResponse._id;
+       const role = jwtResponse.role;
       if (role == "admin") {
         next();
       } else {
@@ -24,3 +24,4 @@ function authMiddleware(req, res, next) {
     res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.AUTH_FAIL);
   }
 }
+module.exports = adminMiddleware

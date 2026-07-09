@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const {userType} = require("../constants/constants")
+const {USERTYPES} = require("../constants/constants")
 
 const userSchema= new mongoose.Schema({
     name:{
@@ -9,7 +9,7 @@ const userSchema= new mongoose.Schema({
     role:{
         type:String,
         lowercase:true,
-        enum:{values:userType},
+        enum:{values:USERTYPES},
         default :"member"
     },
     email:{
