@@ -13,11 +13,20 @@ async function findAuthors(query) {
     filter.nationality = query.nationality;
   }
   //filter using name
-  const allAuthor = await Author.findOne(filter);
+  const allAuthor = await Author.find(filter);
   return allAuthor;
 }
 // findone
-async function findOneAuthor(name){
-    const findAuthorByName = await Author.findOne(name)
-    return findAuthorByName
+async function findAuthorByName(name){
+    const findAuthor = await Author.findOne({authorName:name})
+    return findAuthor
 }
+async function findAuthorById(id){
+  const findAuthor = await Author.findOne(id)
+  return findAuthor 
+}
+async function update(id,authorData){
+   const updateAuthor = await Author.findByIdAndUpdate({_id:id},{biography,nationality},{new:true})
+   return updateAuthor
+}
+module.exports = {createAuthor,findAuthors,findAuthorByName,findAuthorById,update}
