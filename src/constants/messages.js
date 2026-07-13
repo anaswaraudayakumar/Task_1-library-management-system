@@ -10,7 +10,7 @@ const MESSAGES= {
     NOT_FOUND:"cannot find the user",
     INVALID_MAIL:"Invalid Email format",
     INVALID_PASSWORD:"password must have 6 charecters ",
-    
+    STRING:"must be string",
 
     //updation response messages
     UPDATE_SUCCESS:"Updated successfully",
@@ -19,8 +19,9 @@ const MESSAGES= {
     INV_TOKEN:"Invalid Token.. Please Login",
 
     //author
-    AUTHOR_CRE_SUCCESS :"Author details added successfully",
-    AUTHOR_GET_ALL:"Author details "
+    CREATED_SUCCESS :"Details added successfully",
+    //
+    GET_ALL:"All Details fetched successfully "
 
 }
 module.exports = MESSAGES;
