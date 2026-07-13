@@ -8,7 +8,7 @@ const categorySchema = mongoose.Schema({
         uppercase:true,
         trim:true
     },
-    discription:{
+    description:{
         type:String,
         required:true,
         trim:true
