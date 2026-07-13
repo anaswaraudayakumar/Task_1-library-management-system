@@ -25,7 +25,10 @@ async function loginController(req, res) {
       data: userInfo,
     });
   } catch (error) {
-    res.status(STATUS_CODES.BAD_REQUEST).json(error.message);
+    res.status(STATUS_CODES.BAD_REQUEST).json({
+      success:false,
+      message:error.message
+    });
   }
 }
 // user edit by admin controller
@@ -54,6 +57,7 @@ async function getAllUserController(req,res){
     const users = await getAllUsers(req.query)
     res.status(STATUS_CODES.OK).json({
         success:true,
+        message:MESSAGES.GET_ALL,
         data:users
     })
   } catch (error) {
