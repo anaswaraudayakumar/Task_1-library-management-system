@@ -1,25 +1,36 @@
 // load .env file constant by process env by default
-require('dotenv').config()
+require("dotenv").config();
 
 //import all required things
-const express = require('express')
-const cors = require('cors')
-require('./src/config/db')
-const routes=require('./src/routes/allRoutes')
+const express = require("express");
+const cors = require("cors");
+require("./src/config/db");
+const routes = require("./src/routes/allRoutes");
 
 //create server using express
-const server =express()
+const server = express();
 //cors
-server.use(cors())
+server.use(cors());
 //parse json to js content
-server.use(express.json())
+server.use(express.json());
+const logger = (req, res, next) => {
+  console.log("API initialize");
+  next()
+};
 //use routes in server
-server.use(routes)
+server.use(logger);
+server.use(routes);
 
-const PORT = process.env.PORT
-//start server to listen client request
-server.listen(PORT,()=>{
-    console.log('Server starts');
-    
+
+//error handling 
+server.use((err,res,req,next)=>{
+    res.status(500).json(err.message)
 })
-//resolve API 
+
+const PORT = process.env.PORT;
+//start server to listen client request
+server.listen(PORT, () => {
+  console.log("Server starts");
+});
+//resolve API
+
