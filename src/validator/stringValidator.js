@@ -7,13 +7,13 @@ function stringValidator(req,res,next){
     for (const key in req.body){
         const value = req.body[key]
         if(typeof value !=="string"){
-            res.status(STATUS_CODES.BAD_REQUEST).json({
+            return res.status(STATUS_CODES.BAD_REQUEST).json({
             success:false,
             message: `${key} must be a string`
         })
         }
-        if(value.trim ===""){
-           res.status(STATUS_CODES.BAD_REQUEST).json({
+        if(value.trim() ===""){
+          return res.status(STATUS_CODES.BAD_REQUEST).json({
             success:false,
             message: `${key} could not be empty`   
         })
