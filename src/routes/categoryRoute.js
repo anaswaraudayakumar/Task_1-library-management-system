@@ -2,9 +2,12 @@ const express = require('express')
 const adminMiddleware = require('../middleware/adminMiddleware')
 const categoryController = require('../controller/categoryController')
 const stringValidator = require('../validator/stringValidator')
+const genValidator = require('../validator/genValidator')
 
 const catRoute = express.Router()
 
-catRoute.post("/categories",adminMiddleware,stringValidator,categoryController.createController)
+//add category
+catRoute.post("/categories",adminMiddleware,genValidator,categoryController.createController)
+//get all type
 catRoute.get("/",adminMiddleware,categoryController.getAllController)
 module.exports = catRoute
