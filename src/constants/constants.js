@@ -1,6 +1,16 @@
-
 const EMAILREGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PASSWORD_MIN_LENGTH = 6
-const USERTYPES = ["admin","member","librarian"]
-
-module.exports={EMAILREGEX,PASSWORD_MIN_LENGTH,USERTYPES}
+const PASSWORD_MIN_LENGTH = 6;
+const USERTYPES = ["admin", "member", "librarian"];
+const REGEX = /^[A-Za-z0-9]/;
+const SCHEMA = {
+  categoryName: "string",
+  bookName: "string",
+  description: "string",
+  language: "string",
+  isbnNo: "string",
+  pages: "number",
+  totalCopies: "number",
+  publicationYear: "number",
+  publisher: "string",
+};
+module.exports = { EMAILREGEX, PASSWORD_MIN_LENGTH, USERTYPES, REGEX, SCHEMA };
