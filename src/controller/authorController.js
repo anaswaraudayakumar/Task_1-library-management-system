@@ -10,7 +10,7 @@ async function createAuthorController(req,res){
         const author = await createAuthorService(req.body)
         res.status(STATUS_CODES.CREATED).json({
             success:true,
-            message:MESSAGES.AUTHOR_CRE_SUCCESS,
+            message:MESSAGES.CREATED_SUCCESS,
             data:author
         })
     } catch (error) {
