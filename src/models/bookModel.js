@@ -39,6 +39,10 @@ const bookSchema = mongoose.Schema({
         type:Number,
         required:true,
     },
+    activeBooks:{
+        type:Number,
+        required:true
+    },
     publicationYear:{
         type:Number,
         required:true,
@@ -47,7 +51,7 @@ const bookSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    librarianName:{
+    addedBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true
