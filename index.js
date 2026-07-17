@@ -23,7 +23,7 @@ server.use(routes);
 
 
 //error handling 
-server.use((err,res,req,next)=>{
+server.use((err,req,res,next)=>{
     res.status(500).json(err.message)
 })
 
