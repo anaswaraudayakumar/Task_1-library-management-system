@@ -12,5 +12,7 @@ const SCHEMA = {
   totalCopies: "number",
   publicationYear: "number",
   publisher: "string",
+  author:"id",
+  category:"id"
 };
 module.exports = { EMAILREGEX, PASSWORD_MIN_LENGTH, USERTYPES, REGEX, SCHEMA };
