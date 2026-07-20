@@ -1,7 +1,6 @@
 const express = require('express')
 const adminMiddleware = require('../middleware/adminMiddleware')
 const categoryController = require('../controller/categoryController')
-const stringValidator = require('../validator/stringValidator')
 const genValidator = require('../validator/genValidator')
 
 const catRoute = express.Router()
