@@ -5,7 +5,9 @@ const bookController = require("../controller/bookController")
 const bookRoute = express.Router()
 const librarianMiddleware = require("../middleware/librarianMiddleware")
 
+
 //add books
 bookRoute.post("/books",librarianMiddleware,genValidator,bookController.createBookController)
-
+//get books\
+bookRoute.get("/",librarianMiddleware,genValidator,bookController.getAllBookController)
 module.exports = bookRoute
