@@ -1,11 +1,11 @@
 const express = require('express')
 const adminMiddleware = require('../middleware/adminMiddleware')
 const authorController = require('../controller/authorController')
-const stringValidator = require('../validator/stringValidator')
+const genValidator = require('../validator/genValidator')
 
 const authorRoute = express.Router()
 //creating the author 
-authorRoute.post("/authors",adminMiddleware,stringValidator,authorController.createAuthorController)
+authorRoute.post("/authors",adminMiddleware,genValidator,authorController.createAuthorController)
 //get author
 authorRoute.get("/",adminMiddleware,authorController.getAllAuthorController)
 
