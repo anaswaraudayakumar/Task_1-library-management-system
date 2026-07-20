@@ -9,7 +9,7 @@ function librarianMiddleware(req, res, next) {
     try {
       const jwtResponse = jwt.verify(token, process.env.JWT_SECRET);
       console.log(jwtResponse);
-      // req.payload = jwtResponse._id;
+       req.payload = jwtResponse.id;
        const role = jwtResponse.role;
       if (role == "librarian") {
         next();
