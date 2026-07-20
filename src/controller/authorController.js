@@ -29,7 +29,7 @@ async function getAllAuthorController(req,res){
         const author = await findAllAuthorService(req.query)
         res.status(STATUS_CODES.OK).json({
             success:true,
-            message:MESSAGES.AUTHOR_GET_ALL,
+            message:MESSAGES.GET_ALL,
             data:author
         })
     } catch (error) {
