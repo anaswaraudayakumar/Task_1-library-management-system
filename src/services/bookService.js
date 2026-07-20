@@ -2,9 +2,12 @@ const { findAuthorById } = require("../repositories/authorRepository")
 const {addBook,getBooks,getOneBook,getOneBookById,updateOneBook} = require("../repositories/bookRepository")
 const { findOneById } = require("../repositories/categoryRepository")
 
-async function createBookService(data){
-   const {bookName,author,description,category,language,isbnNo,pages,totalCopies,publicationYear,publisher,addedBy} =data
-   const existingBook = await getOneBook(bookName)
+async function createBookService(data,librarianId){
+   const {bookName,author,description,category,language,isbnNo,pages,totalCopies,activeBooks,publicationYear,publisher} =data
+  const addedBy = librarianId
+  
+  
+   const existingBook = await getOneBook(bookName,librarianId)
    if(existingBook){
     throw new Error("Already Exist ")
    }
@@ -17,8 +20,20 @@ async function createBookService(data){
 //     throw new Error("There is no category as mentioned")
 //    }
    
-   const newBook = await addBook({bookName,author,description,category,language,isbnNo,pages,totalCopies,publicationYear,publisher,addedBy})
+   const newBook = await addBook({bookName,author,description,category,language,isbnNo,pages,totalCopies,activeBooks,publicationYear,publisher,addedBy})
    return newBook
 }
 
-module.exports = {createBookService}
+async function getAllBooksService(query,id){
+   //id= librarianId
+   const allBooks = await getBooks(query,id)
+   
+   
+   if(!allBooks.length){
+       throw new Error ("There is no books as specified")
+   }
+   return allBooks
+}
+
+
+module.exports = {createBookService,getAllBooksService}
