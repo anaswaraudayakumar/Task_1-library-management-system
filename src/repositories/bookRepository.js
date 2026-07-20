@@ -7,15 +7,16 @@ async function addBook(bookData){
 }
 
 //get all book
-async function getBooks(query){
-    const filter ={}
+async function getBooks(query,librarianId){
+    const filter ={ addedBy: librarianId}
+
     //filter using name
     if(query.bookName){
-        filter.bookName= query.bookName
+        filter.bookName= {$regex:query.bookName,$options:"i"}
     }
     //filter using category
     if(query.category){
-        filter.category= query.category
+        filter.category=query.category
     }
     //filter using author
     if(query.author){
@@ -25,21 +26,23 @@ async function getBooks(query){
     if(query.language){
         filter.language = query.language
     }
-    const allBooks = await Book.find(filter).populate("librarianName","name")
+    const allBooks = await Book.find(filter).populate("author","authorName").populate("category","categoryName")
+    return allBooks
 }
 
 //get one book
-async function getOneBook(name){
-    const findBook = await Book.findOne({bookName:name}).populate("author").populate("category")
+async function getOneBook(name,librarianId){
+    const findBook = await Book.findOne({bookName:name},{addedBy:librarianId}).populate("author").populate("category")
     return findBook
 }
 //get one book
-async function getOneBookById(id){
-    const findBook = await Book.findOne(id).populate("author").populate("category")
+async function getOneBookById(id,librarianId){
+    const findBook = await Book.findOne({_id:id},{addedBy:librarianId}).populate("author").populate("category")
     return findBook
 }
 //update the book 
 async function updateOneBook(id,bookData){
     const editBook = await Book.findByIdAndUpdate({_id:id},bookData,{new:true})
 }
+
 module.exports = {addBook,getBooks,getOneBook,getOneBookById,updateOneBook}
