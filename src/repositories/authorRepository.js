@@ -10,7 +10,10 @@ async function findAuthors(query) {
   const filter = {};
   // filter using nationality
   if (query.nationality) {
-    filter.nationality = query.nationality;
+    filter.nationality = {$regex:query.nationality,$options:"i"};;
+  }
+  if (query.search) {
+    filter.authorName = {$regex:query.search,$options:"i"};
   }
   //filter using name
   const allAuthor = await Author.find(filter);
