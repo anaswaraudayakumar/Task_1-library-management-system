@@ -58,10 +58,11 @@ async function createBookService(data, librarianId) {
 async function getAllBooksService(query, id) {
     //id= librarianId
     const allBooks = await getBooks(query, id)
-
+    
     if (!allBooks.length) {
         throw new Error('There is no books as specified')
     }
+    
     return allBooks
 }
 
