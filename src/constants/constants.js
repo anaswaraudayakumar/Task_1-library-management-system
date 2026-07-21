@@ -17,4 +17,6 @@ const SCHEMA = {
     page: 'number',
     limit: 'number',
 }
-module.exports = { EMAILREGEX, PASSWORD_MIN_LENGTH, USERTYPES, REGEX, SCHEMA }
+const DEFAULT_PAGE =1
+const DEFAULT_LIMIT = 3
+module.exports = { EMAILREGEX, PASSWORD_MIN_LENGTH, USERTYPES, REGEX, SCHEMA ,DEFAULT_PAGE,DEFAULT_LIMIT}
