@@ -6,7 +6,12 @@ const genValidator = require('../validator/genValidator')
 const catRoute = express.Router()
 
 //add category
-catRoute.post("/categories",adminMiddleware,genValidator,categoryController.createController)
+catRoute.post(
+    '/categories',
+    adminMiddleware,
+    genValidator,
+    categoryController.createController
+)
 //get all type
-catRoute.get("/",adminMiddleware,categoryController.getAllController)
+catRoute.get('/', adminMiddleware, categoryController.getAllController)
 module.exports = catRoute

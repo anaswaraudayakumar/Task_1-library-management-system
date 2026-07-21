@@ -1,26 +1,27 @@
-const {createCategory,findAllCategory,findOneById,findOneByName} = require("../repositories/categoryRepository");
+const {
+    createCategory,
+    findAllCategory,
+    findOneById,
+    findOneByName,
+} = require('../repositories/categoryRepository')
 
-
-async function createCategoryService(data){
-    const {categoryName,description} = data
+async function createCategoryService(data) {
+    const { categoryName, description } = data
     const existingCategory = await findOneByName(categoryName)
-    if(existingCategory){
-       throw new Error(" Already exist");
+    if (existingCategory) {
+        throw new Error(' Already exist')
     }
-    const newCategory = await createCategory({categoryName,description})
+    const newCategory = await createCategory({ categoryName, description })
     return newCategory
 }
 
-
-async function getAllCategoryService(){
-    console.log("Inside getAllCategory");
+async function getAllCategoryService() {
+    console.log('Inside getAllCategory')
     const allCategory = await findAllCategory()
-    if(!allCategory.length){
-    throw new Error("Category name not listed")
-
+    if (!allCategory.length) {
+        throw new Error('Category name not listed')
     }
     return allCategory
-    
 }
 
-module.exports = {createCategoryService,getAllCategoryService}
+module.exports = { createCategoryService, getAllCategoryService }

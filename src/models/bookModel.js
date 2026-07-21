@@ -1,71 +1,75 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const bookSchema = mongoose.Schema({
-    bookName:{
-        type:String,
-        required:true,
-        unique:true,
-        uppercase:true,
-        trim:true
+const bookSchema = mongoose.Schema(
+    {
+        bookName: {
+            type: String,
+            required: true,
+            unique: true,
+            uppercase: true,
+            trim: true,
+        },
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Author',
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,
+        },
+        category: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Category',
+                required: true,
+            },
+        ],
+        language: {
+            type: String,
+            required: true,
+        },
+        isbnNo: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        pages: {
+            type: Number,
+            required: true,
+        },
+        totalCopies: {
+            type: Number,
+            required: true,
+        },
+        activeBooks: {
+            type: Number,
+            required: true,
+        },
+        publicationYear: {
+            type: Number,
+            required: true,
+        },
+        publisher: {
+            type: String,
+            required: true,
+        },
+        addedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        status: {
+            type: String,
+            enum: ['active', 'inactive'],
+            default: 'active',
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
     },
-     author:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Author",
-        required:true,
-    },
-    description:{
-        type:String,
-        required:true,
-    },
-    category:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Category",
-        required:true,
-    }],
-    language:{
-        type:String,
-        required:true,
-    },
-    isbnNo:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    pages:{
-        type:Number,
-        required:true,
-    },
-    totalCopies:{
-        type:Number,
-        required:true,
-    },
-    activeBooks:{
-        type:Number,
-        required:true
-    },
-    publicationYear:{
-        type:Number,
-        required:true,
-    },
-    publisher:{
-        type:String,
-        required:true
-    },
-    addedBy:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true
-    },
-    status:{
-        type:String,
-        enum:["active","inactive"],
-        default:"active"
-    },
-    isDeleted:{
-        type:Boolean,
-        default:false
-    },
+    { timestamps: true }
+)
 
-},{timestamps:true})
-
-module.exports = mongoose.model("Book",bookSchema)
+module.exports = mongoose.model('Book', bookSchema)

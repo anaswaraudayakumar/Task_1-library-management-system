@@ -7,15 +7,15 @@ const bookRoute = require('./bookRoutes')
 // to set up routes outside server
 const router = new express.Router()
 
-//user authentication 
-router.use('/user',userRoute)
+//user authentication
+router.use('/user', userRoute)
 //author
-router.use("/author",authorRoute)
+router.use('/author', authorRoute)
 
 //category
-router.use("/category",catRoute)
+router.use('/category', catRoute)
 
 //book
-router.use("/book",bookRoute)
+router.use('/book', bookRoute)
 
 module.exports = router
