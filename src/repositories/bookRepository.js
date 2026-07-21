@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Book = require('../models/bookModel')
+const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../constants/constants')
 
 //add book
 async function addBook(bookData) {
@@ -33,8 +34,8 @@ async function getBooks(query, librarianId) {
     }
 
     //pagination logic by limit and skip
-    const page = Number(query.page) || 1
-    const limit = Number(query.limit) || 3
+    const page = Number(query.page) || DEFAULT_PAGE
+    const limit = Number(query.limit) || DEFAULT_LIMIT
     const skip = (page - 1) * limit
 
     // const allBooks = await Book.find(filter).populate("author","authorName").populate("category","categoryName")
@@ -63,7 +64,7 @@ async function getBooks(query, librarianId) {
                             as: 'author',
                         },
                     },
-                    //   { $unwind: "$author" },
+                     { $unwind: "$author" },
                     {
                         $lookup: {
                             from: 'categories',
@@ -81,9 +82,11 @@ async function getBooks(query, librarianId) {
                         },
                     },
                 ],
-                metadata: [{ $count: 'totalBooks' }],
+                metadata : [{ $count: 'totalBooks' }],
             },
+            
         },
+        
     ])
     return allBooks
 }
