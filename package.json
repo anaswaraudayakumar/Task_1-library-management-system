@@ -7,7 +7,8 @@
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier-check": "prettier . -c",
-        "prettier-write": "prettier . -w"
+        "prettier-write": "prettier . -w",
+        "esLint": "eslint ."
     },
     "keywords": [],
     "author": "",
@@ -22,10 +23,14 @@
         "mongoose": "^9.7.3"
     },
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.7.0",
+        "globals": "^17.7.0",
         "pre-commit": "^2.0.0",
         "prettier": "^3.9.5"
     },
     "pre-commit": [
-        "prettier-check"
+        "prettier-check",
+        "esLint"
     ]
 }
