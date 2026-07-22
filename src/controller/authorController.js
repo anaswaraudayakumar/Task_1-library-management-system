@@ -4,7 +4,6 @@ const {
 } = require('../services/authorService')
 const MESSAGES = require('../constants/messages')
 const STATUS_CODES = require('../constants/statusCodes')
-const { getAll } = require('../repositories/userRepository')
 
 async function createAuthorController(req, res) {
     console.log('Inside createAuthorController ')
