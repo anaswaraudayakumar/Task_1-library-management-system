@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Book = require('../models/bookModel')
-const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../constants/constants')
+const pagination = require('../utility/paginationFun')
 
 //add book
 async function addBook(bookData) {
@@ -10,7 +10,12 @@ async function addBook(bookData) {
 
 //get all book
 async function getBooks(query, librarianId) {
-    const filter = { addedBy: new mongoose.Types.ObjectId(librarianId) }
+    //function for filtering
+
+    const filter = {
+        addedBy: new mongoose.Types.ObjectId(librarianId),
+        isDeleted: false,
+    }
 
     //filter using name
     if (query.bookName) {
@@ -19,6 +24,10 @@ async function getBooks(query, librarianId) {
     //searching using name
     if (query.search) {
         filter.bookName = { $regex: query.search, $options: 'i' }
+    }
+    //active
+    if (query.status) {
+        filter.status = { $regex: query.status, $options: 'i' }
     }
     //filter using category
     if (query.category) {
@@ -33,10 +42,15 @@ async function getBooks(query, librarianId) {
         filter.language = query.language
     }
 
+    //sorting logic
+    const sort = {}
+    if (query.sortBy) {
+        sort[query.sortBy] = query.order == 'asc' ? 1 : -1
+    } else {
+        sort.createdAt = 1
+    }
     //pagination logic by limit and skip
-    const page = Number(query.page) || DEFAULT_PAGE
-    const limit = Number(query.limit) || DEFAULT_LIMIT
-    const skip = (page - 1) * limit
+    const { limit, skip } = pagination(query)
 
     // const allBooks = await Book.find(filter).populate("author","authorName").populate("category","categoryName")
     const allBooks = await Book.aggregate([
@@ -46,9 +60,7 @@ async function getBooks(query, librarianId) {
         },
         {
             //sort in the basis of created first
-            $sort: {
-                createdAt: 1,
-            },
+            $sort: sort,
         },
         {
             //
@@ -61,10 +73,18 @@ async function getBooks(query, librarianId) {
                             from: 'authors',
                             localField: 'author',
                             foreignField: '_id',
+                            pipeline: [
+                                {
+                                    $project: {
+                                        _id: 0,
+                                        authorName: 1,
+                                    },
+                                },
+                            ],
                             as: 'author',
                         },
                     },
-                     { $unwind: "$author" },
+                    { $unwind: '$author' },
                     {
                         $lookup: {
                             from: 'categories',
@@ -82,11 +102,9 @@ async function getBooks(query, librarianId) {
                         },
                     },
                 ],
-                metadata : [{ $count: 'totalBooks' }],
+                metadata: [{ $count: 'totalBooks' }],
             },
-            
         },
-        
     ])
     return allBooks
 }
@@ -111,10 +129,11 @@ async function getOneBookById(id, librarianId) {
 //update the book
 async function updateOneBook(id, bookData) {
     const editBook = await Book.findByIdAndUpdate({ _id: id }, bookData, {
-        new: true,
+        returnNewDocument: true,
     })
     return editBook
 }
+
 async function removeOneBook(id) {
     const removeBook = await Book.findByIdAndUpdate(
         { _id: id },
@@ -129,4 +148,5 @@ module.exports = {
     getOneBook,
     getOneBookById,
     updateOneBook,
+    removeOneBook,
 }
