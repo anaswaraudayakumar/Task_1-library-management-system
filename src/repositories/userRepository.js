@@ -2,7 +2,8 @@ const User = require('../models/userModel')
 
 //create user
 async function register(userData) {
-    return await User.create(userData)
+    const user = await User.create(userData)
+    return await User.findById(user._id).select('-password')
 }
 
 //get user by mail for login
