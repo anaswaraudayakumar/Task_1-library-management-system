@@ -39,4 +39,8 @@ async function updateAuthorService(id, authorData) {
     return updatedAuthor
 }
 
-module.exports = { createAuthorService, findAllAuthorService }
+module.exports = {
+    createAuthorService,
+    findAllAuthorService,
+    updateAuthorService,
+}
