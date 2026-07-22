@@ -11,6 +11,7 @@ async function createController(req, res) {
         res.status(STATUS_CODES.CREATED).json({
             success: true,
             message: MESSAGES.CREATED_SUCCESS,
+            data: category,
         })
     } catch (error) {
         res.status(STATUS_CODES.BAD_REQUEST).json({

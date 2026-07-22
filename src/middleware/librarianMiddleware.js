@@ -17,6 +17,7 @@ function librarianMiddleware(req, res, next) {
                 res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
             }
         } catch (error) {
+            console.log(error)
             res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
         }
     } else {
