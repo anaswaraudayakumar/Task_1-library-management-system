@@ -1,13 +1,11 @@
-const { findAuthorById } = require('../repositories/authorRepository')
-
 const {
     addBook,
     getBooks,
     getOneBook,
     getOneBookById,
     updateOneBook,
+    removeOneBook,
 } = require('../repositories/bookRepository')
-const { findOneById } = require('../repositories/categoryRepository')
 
 async function createBookService(data, librarianId) {
     const {
@@ -54,16 +52,49 @@ async function createBookService(data, librarianId) {
     })
     return newBook
 }
-
+//get all book
 async function getAllBooksService(query, id) {
     //id= librarianId
     const allBooks = await getBooks(query, id)
-    
-    if (!allBooks.length) {
-        throw new Error('There is no books as specified')
-    }
-    
+
+    // if (!allBooks.length) {
+    //     throw new Error('There is no books as specified')
+    // }
+
     return allBooks
 }
+//for viewing one book
+async function getOneBookService(bookId, librarianId) {
+    //id= librarianId
+    const book = await getOneBookById(bookId, librarianId)
+    if (!book) {
+        throw new Error('There is no books as specified')
+    }
+    return book
+}
+//remove book
+async function removeBookService(id, librarianId) {
+    const existingBook = await getOneBookById(id, librarianId)
+    if (!existingBook) {
+        throw new Error("can't find that book")
+    }
+    const removeBook = await removeOneBook(id)
+    return removeBook
+}
+// updateBook
+async function updateBookService(id, librarianId, data) {
+    const existingBook = await getOneBookById(id, librarianId)
+    if (!existingBook) {
+        throw new Error("can't find that book")
+    }
+    const updateBook = await updateOneBook(id, data)
+    return updateBook
+}
 
-module.exports = { createBookService, getAllBooksService }
+module.exports = {
+    createBookService,
+    getAllBooksService,
+    getOneBookService,
+    removeBookService,
+    updateBookService,
+}
