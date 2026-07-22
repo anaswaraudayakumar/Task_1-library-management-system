@@ -1,7 +1,6 @@
 const {
     createCategory,
     findAllCategory,
-    findOneById,
     findOneByName,
 } = require('../repositories/categoryRepository')
 
