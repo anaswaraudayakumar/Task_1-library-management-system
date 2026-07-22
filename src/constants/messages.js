@@ -20,5 +20,9 @@ const MESSAGES = {
     CREATED_SUCCESS: 'Details added successfully',
     //
     GET_ALL: 'All Details fetched successfully ',
+    //updated
+    EDIT: 'Item Updated successfully',
+    //delete
+    DELETE: 'Item deleted successfully',
 }
 module.exports = MESSAGES
