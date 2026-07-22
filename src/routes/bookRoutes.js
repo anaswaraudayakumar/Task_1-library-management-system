@@ -1,22 +1,25 @@
 const express = require('express')
 const genValidator = require('../validator/genValidator')
-const adminMiddleware = require('../middleware/adminMiddleware')
 const bookController = require('../controller/bookController')
 const bookRoute = express.Router()
 const librarianMiddleware = require('../middleware/librarianMiddleware')
+const fieldValidator = require('../validator/fieldValidator')
 
+//librarian Middleware
+bookRoute.use(librarianMiddleware)
 //add books
-bookRoute.post(
-    '/books',
-    librarianMiddleware,
-    genValidator,
-    bookController.createBookController
-)
+bookRoute.post('/books', genValidator, bookController.createBookController)
 //get books\
-bookRoute.get(
-    '/',
-    librarianMiddleware,
+bookRoute.get('/', genValidator, bookController.getAllBookController)
+//get one book by id
+bookRoute.get('/:id', genValidator, bookController.getOneBookController)
+//updateBook
+bookRoute.put(
+    '/:id',
+    fieldValidator,
     genValidator,
-    bookController.getAllBookController
+    bookController.updateBookcontroller
 )
+//remove book
+bookRoute.delete('/:id', bookController.removeBookController)
 module.exports = bookRoute
