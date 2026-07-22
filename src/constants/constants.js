@@ -14,9 +14,33 @@ const SCHEMA = {
     publisher: 'string',
     author: 'id',
     category: 'id',
+    status: 'string',
     page: 'number',
     limit: 'number',
 }
-const DEFAULT_PAGE =1
+const ALLOWED_FIELD = [
+    'bookName',
+    'description',
+    'language',
+    'isbnNo',
+    'pages',
+    'totalCopies',
+    'activeBooks',
+    'status',
+    ' publicationYear',
+    'publisher',
+    'author',
+]
+
+const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 3
-module.exports = { EMAILREGEX, PASSWORD_MIN_LENGTH, USERTYPES, REGEX, SCHEMA ,DEFAULT_PAGE,DEFAULT_LIMIT}
+module.exports = {
+    EMAILREGEX,
+    PASSWORD_MIN_LENGTH,
+    USERTYPES,
+    REGEX,
+    SCHEMA,
+    DEFAULT_PAGE,
+    DEFAULT_LIMIT,
+    ALLOWED_FIELD,
+}
