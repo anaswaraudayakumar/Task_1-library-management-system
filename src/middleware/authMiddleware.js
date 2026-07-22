@@ -12,6 +12,7 @@ function authMiddleware(req, res, next) {
             req.payload = jwtResponse.email
             next()
         } catch (error) {
+            console.log(error)
             res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
         }
     } else {

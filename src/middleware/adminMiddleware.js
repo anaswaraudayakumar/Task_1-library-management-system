@@ -17,7 +17,11 @@ function adminMiddleware(req, res, next) {
                 res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
             }
         } catch (error) {
-            res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
+            console.log(error)
+
+            res.status(STATUS_CODES.UN_AUTHORIZED).json({
+                message: MESSAGES.INV_TOKEN,
+            })
         }
     } else {
         //MESSAGES
