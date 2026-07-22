@@ -14,6 +14,7 @@ async function registerController(req, res) {
         res.status(STATUS_CODES.CREATED).json({
             success: true,
             message: MESSAGES.REGISTER_SUCCESS,
+            data: user,
         })
     } catch (error) {
         res.status(STATUS_CODES.BAD_REQUEST).json(error.message)
