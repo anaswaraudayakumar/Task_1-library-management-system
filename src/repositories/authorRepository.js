@@ -29,6 +29,7 @@ async function findAuthorById(id) {
     return findAuthor
 }
 async function update(id, authorData) {
+    const { biography, nationality } = authorData
     const updateAuthor = await Author.findByIdAndUpdate(
         { _id: id },
         { biography, nationality },
