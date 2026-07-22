@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "prettier": "prettier . -w"
+        "prettier-check": "prettier . -c",
+        "prettier-write": "prettier . -w"
     },
     "keywords": [],
     "author": "",
@@ -25,6 +26,6 @@
         "prettier": "^3.9.5"
     },
     "pre-commit": [
-    "prettier"
-  ]
+        "prettier-check"
+    ]
 }
