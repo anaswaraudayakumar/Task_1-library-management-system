@@ -3,7 +3,7 @@ const connectionString = process.env.DB_CONNECTIONSTRING
 
 mongoose
     .connect(connectionString)
-    .then((res) => {
+    .then(() => {
         console.log('Database connection String Successfull')
     })
     .catch((error) => {
