@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema(
             required: true,
             minlength: 6,
         },
+        active: {
+            type: String,
+            required: true,
+            default: false,
+        },
     },
     { timestamps: true }
 )
