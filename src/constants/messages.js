@@ -24,5 +24,9 @@ const MESSAGES = {
     EDIT: 'Item Updated successfully',
     //delete
     DELETE: 'Item deleted successfully',
+    //renew
+    RENEW: 'The book renewed successfully',
+    //return
+    RETURN: 'The book returned successfully',
 }
 module.exports = MESSAGES

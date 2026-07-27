@@ -17,6 +17,8 @@ const SCHEMA = {
     status: 'string',
     page: 'number',
     limit: 'number',
+    bookId: 'id',
+    memberId: 'id',
 }
 const ALLOWED_FIELD = [
     'bookName',
@@ -34,6 +36,8 @@ const ALLOWED_FIELD = [
 
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 3
+const BORROW_STATUS = ['borrowed', 'returned']
+const ACTIVE_STATUS = { active: 'active', inactive: 'inactive' }
 module.exports = {
     EMAILREGEX,
     PASSWORD_MIN_LENGTH,
@@ -43,4 +47,6 @@ module.exports = {
     DEFAULT_PAGE,
     DEFAULT_LIMIT,
     ALLOWED_FIELD,
+    BORROW_STATUS,
+    ACTIVE_STATUS,
 }

@@ -119,17 +119,19 @@ async function getOneBook(name, librarianId) {
         .populate('category')
     return findBook
 }
+
 //get one book
-async function getOneBookById(id, librarianId) {
-    const findBook = await Book.findOne({ _id: id }, { addedBy: librarianId })
+async function getOneBookById(id) {
+    const findBook = await Book.findOne({ _id: id })
         .populate('author')
         .populate('category')
     return findBook
 }
+
 //update the book
 async function updateOneBook(id, bookData) {
     const editBook = await Book.findByIdAndUpdate({ _id: id }, bookData, {
-        returnNewDocument: true,
+        returnDocument: 'after',
     })
     return editBook
 }

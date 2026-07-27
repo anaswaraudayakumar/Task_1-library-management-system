@@ -3,6 +3,7 @@ const userRoute = require('./userRoute')
 const authorRoute = require('./authorRoute')
 const catRoute = require('./categoryRoute')
 const bookRoute = require('./bookRoutes')
+const borrowRoute = require('./borrowRoute')
 
 // to set up routes outside server
 const router = new express.Router()
@@ -17,5 +18,8 @@ router.use('/category', catRoute)
 
 //book
 router.use('/book', bookRoute)
+
+//borrow
+router.use('/borrow', borrowRoute)
 
 module.exports = router
