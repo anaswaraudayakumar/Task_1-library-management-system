@@ -10,14 +10,22 @@ const {
     updateDetails,
 } = require('../repositories/borrowReturnRepository')
 const getDueDate = require('../utility/date')
+const cacheService = require('./cacheService')
 
 //borrowing
 async function addBorrowService(id, data) {
     const { bookId, memberId } = data
+    const key = `bookId-${bookId}`
     const librarianId = id
-    const existBook = await getOneBookById(bookId)
+
+    let existBook = await cacheService.get(key)
+    //if not
+    if (!existBook) {
+        existBook = await getOneBookById(bookId)
+    }
 
     if (existBook.status == ACTIVE_STATUS.inactive) {
+        console.log(existBook)
         throw new Error('There is no active copies now')
     } else {
         const newBorrow = await addBorrow({
@@ -30,6 +38,7 @@ async function addBorrowService(id, data) {
         let status
         if (activeBooks === 0) {
             status = ACTIVE_STATUS.inactive
+            await cacheService.remove(key)
         } else {
             status = ACTIVE_STATUS.active
         }

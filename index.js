@@ -6,7 +6,7 @@ const express = require('express')
 const cors = require('cors')
 require('./src/config/db')
 const routes = require('./src/routes/allRoutes')
-
+const responseTime = require('./src/middleware/resTimeMiddleware')
 //create server using express
 const server = express()
 //cors
@@ -19,6 +19,7 @@ const logger = (req, res, next) => {
 }
 //use routes in server
 server.use(logger)
+server.use(responseTime)
 server.use(routes)
 
 //error handling
