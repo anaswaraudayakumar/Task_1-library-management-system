@@ -28,5 +28,7 @@ const MESSAGES = {
     RENEW: 'The book renewed successfully',
     //return
     RETURN: 'The book returned successfully',
+    //fine payment
+    FINE_PAY_SUCCESS: 'Fine payment successful',
 }
 module.exports = MESSAGES
