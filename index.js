@@ -7,19 +7,21 @@ const cors = require('cors')
 require('./src/config/db')
 const routes = require('./src/routes/allRoutes')
 const responseTime = require('./src/middleware/resTimeMiddleware')
+const responseHandler = require('./src/middleware/responseHandlerMiddleware')
+const loggerRequest = require('./src/middleware/loggerMiddleware')
 //create server using express
 const server = express()
 //cors
 server.use(cors())
 //parse json to js content
 server.use(express.json())
-const logger = (req, res, next) => {
-    console.log('API initialize')
-    next()
-}
+
 //use routes in server
-server.use(logger)
+server.use(loggerRequest)
+
 server.use(responseTime)
+server.use(responseHandler)
+
 server.use(routes)
 
 //error handling
