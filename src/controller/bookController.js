@@ -9,7 +9,6 @@ const MESSAGES = require('../constants/messages')
 const STATUS_CODES = require('../constants/statusCodes')
 const pagination = require('../utility/paginationFun')
 
-
 async function createBookController(req, res) {
     console.log('Inside CreateBookController')
 
@@ -51,9 +50,8 @@ async function getOneBookController(req, res) {
     const { id } = req.params
     try {
         const book = await getOneBookService(id, librarianId)
-        
-        res.success(MESSAGES.GET_ALL, book, STATUS_CODES.OK)
 
+        res.success(MESSAGES.GET_ALL, book, STATUS_CODES.OK)
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
@@ -63,8 +61,7 @@ async function updateBookcontroller(req, res) {
     const librarianId = req.payload
     try {
         const updateBook = await updateBookService(id, librarianId, req.body)
-        res.success(MESSAGES.EDIT,updateBook,STATUS_CODES.OK)
-
+        res.success(MESSAGES.EDIT, updateBook, STATUS_CODES.OK)
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
@@ -75,8 +72,7 @@ async function removeBookController(req, res) {
 
     try {
         const removeBook = await removeBookService(id)
-        res.success(MESSAGES.EDIT,removeBook,STATUS_CODES.OK)
-        
+        res.success(MESSAGES.EDIT, removeBook, STATUS_CODES.OK)
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }

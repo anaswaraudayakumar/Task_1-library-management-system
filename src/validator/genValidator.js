@@ -7,10 +7,7 @@ function genValidator(req, res, next) {
     if (error) {
         console.log(error)
         res.fail(error, STATUS_CODES.BAD_REQUEST)
-
-        
     }
     next()
 }
 module.exports = genValidator
-

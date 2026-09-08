@@ -11,7 +11,6 @@ function registerValidation(req, res, next) {
     const { name, role, email, password } = req.body
     if (!name || !role || !email || !password) {
         res.fail(MESSAGES.INCOMPLETE_FORM, STATUS_CODES.BAD_REQUEST)
-
     }
     //role
     if (role) {
@@ -44,7 +43,6 @@ function loginValidation(req, res, next) {
 
     if (!EMAILREGEX.test(email)) {
         res.fail(MESSAGES.INVALID_MAIL, STATUS_CODES.BAD_REQUEST)
-
     }
 
     //password validation

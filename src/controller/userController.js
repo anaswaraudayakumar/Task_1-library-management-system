@@ -33,10 +33,8 @@ async function userEditController(req, res) {
     try {
         const updatedUser = await updateUserByAdmin(id, userData)
         res.success(MESSAGES.UPDATE_SUCCESS, updatedUser, STATUS_CODES.OK)
-
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
-
     }
 }
 
@@ -45,7 +43,6 @@ async function getAllUserController(req, res) {
     try {
         const users = await getAllUsers(req.query)
         res.success(MESSAGES.GET_ALL, users, STATUS_CODES.OK)
-
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }

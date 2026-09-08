@@ -7,7 +7,7 @@ async function returnController(req, res) {
     const { id } = req.params
     try {
         const returnResult = await addReturnService(id)
-        res.success(MESSAGES.RETURN,returnResult, STATUS_CODES.OK)
+        res.success(MESSAGES.RETURN, returnResult, STATUS_CODES.OK)
     } catch (error) {
         res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
