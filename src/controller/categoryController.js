@@ -8,31 +8,18 @@ const {
 async function createController(req, res) {
     try {
         const category = await createCategoryService(req.body)
-        res.status(STATUS_CODES.CREATED).json({
-            success: true,
-            message: MESSAGES.CREATED_SUCCESS,
-            data: category,
-        })
+
+        res.success(MESSAGES.CREATED_SUCCESS, category, STATUS_CODES.CREATED)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 async function getAllController(req, res) {
     try {
         const categories = await getAllCategoryService(req.query)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: categories,
-        })
+        res.success(MESSAGES.GET_ALL, categories, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 module.exports = { createController, getAllController }

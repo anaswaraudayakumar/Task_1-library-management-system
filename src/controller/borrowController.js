@@ -6,52 +6,33 @@ const {
     getAllService,
 } = require('../services/borrowService')
 
+//create borrow
 async function createBorrowController(req, res) {
     const data = req.body
     try {
         const newBorrow = await addBorrowService(req.payload, data)
-        res.status(STATUS_CODES.CREATED).json({
-            success: true,
-            message: MESSAGES.CREATED_SUCCESS,
-            data: newBorrow,
-        })
+        res.success(MESSAGES.CREATED_SUCCESS, newBorrow, STATUS_CODES.CREATED)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
+//create renew
 async function renewController(req, res) {
     const { id } = req.params
     try {
         const renewResult = await addRenewService(id)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.RENEW,
-            data: renewResult,
-        })
+        res.success(MESSAGES.RENEW, renewResult, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 async function getAllController(req, res) {
     const id = req.payload
     try {
         const getAllBorrowed = await getAllService(req.query, id)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: getAllBorrowed,
-        })
+        res.success(MESSAGES.GET_ALL, getAllBorrowed, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 

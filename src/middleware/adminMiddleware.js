@@ -14,18 +14,16 @@ function adminMiddleware(req, res, next) {
             if (role == 'admin') {
                 next()
             } else {
-                res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
+                res.fail(MESSAGES.INV_TOKEN, STATUS_CODES.UN_AUTHORIZED)
             }
         } catch (error) {
             console.log(error)
 
-            res.status(STATUS_CODES.UN_AUTHORIZED).json({
-                message: MESSAGES.INV_TOKEN,
-            })
+            res.fail(MESSAGES.INV_TOKEN, STATUS_CODES.UN_AUTHORIZED)
         }
     } else {
         //MESSAGES
-        res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.AUTH_FAIL)
+        res.fail(MESSAGES.AUTH_FAIL, STATUS_CODES.UN_AUTHORIZED)
     }
 }
 module.exports = adminMiddleware

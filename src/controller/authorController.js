@@ -9,16 +9,9 @@ async function createAuthorController(req, res) {
     console.log('Inside createAuthorController ')
     try {
         const author = await createAuthorService(req.body)
-        res.status(STATUS_CODES.CREATED).json({
-            success: true,
-            message: MESSAGES.CREATED_SUCCESS,
-            data: author,
-        })
+        res.success(MESSAGES.CREATED_SUCCESS, author, STATUS_CODES.CREATED)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 //getallauthor
@@ -26,16 +19,9 @@ async function getAllAuthorController(req, res) {
     console.log('Inside getAllAuthorController ')
     try {
         const author = await findAllAuthorService(req.query)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: author,
-        })
+        res.success(MESSAGES.GET_ALL, author, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 // async function updateController(req,res){
