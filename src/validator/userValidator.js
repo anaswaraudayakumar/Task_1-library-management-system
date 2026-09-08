@@ -10,28 +10,24 @@ function registerValidation(req, res, next) {
     console.log('Inside registervalidation')
     const { name, role, email, password } = req.body
     if (!name || !role || !email || !password) {
-        return res
-            .status(STATUS_CODES.BAD_REQUEST)
-            .json(MESSAGES.INCOMPLETE_FORM)
+        res.fail(MESSAGES.INCOMPLETE_FORM, STATUS_CODES.BAD_REQUEST)
     }
     //role
     if (role) {
         req.body.role = role.toLowerCase()
         if (!USERTYPES.includes(req.body.role)) {
-            return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.NOT_FOUND)
+            res.fail(MESSAGES.NOT_FOUND, STATUS_CODES.BAD_REQUEST)
         }
     }
     //email regex checking
 
     if (!EMAILREGEX.test(email)) {
-        return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.INVALID_MAIL)
+        res.fail(MESSAGES.INVALID_MAIL, STATUS_CODES.BAD_REQUEST)
     }
 
     //password validation
     if (password.length < PASSWORD_MIN_LENGTH) {
-        return res
-            .status(STATUS_CODES.BAD_REQUEST)
-            .json(MESSAGES.INVALID_PASSWORD)
+        res.fail(MESSAGES.INVALID_PASSWORD, STATUS_CODES.BAD_REQUEST)
     }
 
     next()
@@ -41,14 +37,12 @@ function loginValidation(req, res, next) {
     console.log('inside Login validation')
     const { email, password } = req.body
     if (!email || !password) {
-        return res
-            .status(STATUS_CODES.BAD_REQUEST)
-            .json(MESSAGES.INCOMPLETE_FORM)
+        res.fail(MESSAGES.INCOMPLETE_FORM, STATUS_CODES.BAD_REQUEST)
     }
     //email regex checking
 
     if (!EMAILREGEX.test(email)) {
-        return res.status(STATUS_CODES.BAD_REQUEST).json(MESSAGES.INVALID_MAIL)
+        res.fail(MESSAGES.INVALID_MAIL, STATUS_CODES.BAD_REQUEST)
     }
 
     //password validation

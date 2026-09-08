@@ -14,16 +14,9 @@ async function createBookController(req, res) {
 
     try {
         const newBook = await createBookService(req.body, req.payload)
-        res.status(STATUS_CODES.CREATED).json({
-            success: true,
-            message: MESSAGES.CREATED_SUCCESS,
-            data: newBook,
-        })
+        res.success(MESSAGES.CREATED_SUCCESS, newBook, STATUS_CODES.CREATED)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 async function getAllBookController(req, res) {
@@ -36,22 +29,18 @@ async function getAllBookController(req, res) {
         const totalBooks = bookData[0].metadata[0]?.totalBooks
         const { page, limit } = pagination(req.query)
         const totalPages = Math.ceil(totalBooks / limit)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: books,
+        const data = {
+            books,
             metadata: {
                 totalBooks,
                 page,
                 limit,
                 totalPages,
             },
-        })
+        }
+        res.success(MESSAGES.GET_ALL, data, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 
@@ -61,16 +50,10 @@ async function getOneBookController(req, res) {
     const { id } = req.params
     try {
         const book = await getOneBookService(id, librarianId)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: book,
-        })
+
+        res.success(MESSAGES.GET_ALL, book, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 async function updateBookcontroller(req, res) {
@@ -78,16 +61,9 @@ async function updateBookcontroller(req, res) {
     const librarianId = req.payload
     try {
         const updateBook = await updateBookService(id, librarianId, req.body)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.EDIT,
-            data: updateBook,
-        })
+        res.success(MESSAGES.EDIT, updateBook, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 
@@ -96,16 +72,9 @@ async function removeBookController(req, res) {
 
     try {
         const removeBook = await removeBookService(id)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.DELETE,
-            data: removeBook,
-        })
+        res.success(MESSAGES.EDIT, removeBook, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 

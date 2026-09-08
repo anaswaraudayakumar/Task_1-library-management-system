@@ -16,12 +16,15 @@ async function getAll(query, id) {
         filter.status = query.status
     }
 
+    if (query.memberId) {
+        filter.memberId = new mongoose.Types.ObjectId(query.memberId)
+    }
     const getAll = await Borrow.aggregate([
         {
             $match: filter,
         },
         {
-            $sort: { dueDate: 1 },
+            $sort: { dueDate: -1 },
         },
         {
             $lookup: {
@@ -86,7 +89,8 @@ async function updateDetails(id, data) {
     const updateBook = await Borrow.findByIdAndUpdate({ _id: id }, data, {
         returnDocument: 'after',
     })
-    console.log(updateBook)
+
+    // console.log(updateBook)
 
     return updateBook
 }

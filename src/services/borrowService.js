@@ -1,4 +1,9 @@
-const { ACTIVE_STATUS, BORROW_STATUS } = require('../constants/constants')
+const {
+    ACTIVE_STATUS,
+    BORROW_STATUS,
+    MAX_BORROW,
+    MAX_FINE,
+} = require('../constants/constants')
 const {
     updateOneBook,
     getOneBookById,
@@ -9,14 +14,34 @@ const {
     getAll,
     updateDetails,
 } = require('../repositories/borrowReturnRepository')
+const { findAllFine } = require('../repositories/fineRepository')
 const getDueDate = require('../utility/date')
 const cacheService = require('./cacheService')
-
+const { addFineService } = require('./fineService')
+const cacheKey = require('../utility/cacheKey')
 //borrowing
 async function addBorrowService(id, data) {
     const { bookId, memberId } = data
-    const key = `bookId-${bookId}`
+    // key for cache
+    const key = cacheKey.book(bookId)
+
     const librarianId = id
+    const borrowed = await getAll(
+        { memberId: memberId, status: BORROW_STATUS.borrowed },
+        librarianId
+    )
+    // borrow length exceed
+    if (borrowed.length >= MAX_BORROW) {
+        throw new Error('The user is out of borrow')
+    }
+
+    const fineStatus = await findAllFine(memberId)
+    console.log(fineStatus)
+
+    // if
+    if (fineStatus.fine >= MAX_FINE) {
+        throw new Error('The user Exceed fine limit ')
+    }
 
     let existBook = await cacheService.get(key)
     //if not
@@ -25,7 +50,6 @@ async function addBorrowService(id, data) {
     }
 
     if (existBook.status == ACTIVE_STATUS.inactive) {
-        console.log(existBook)
         throw new Error('There is no active copies now')
     } else {
         const newBorrow = await addBorrow({
@@ -52,20 +76,29 @@ async function addBorrowService(id, data) {
 
 //renewing
 async function addRenewService(id) {
-    //data have 2 id, bookId,borrowId
+    //data id=borrowId
     //check the borrowing is exist or not
     const borrowDetails = await getOneDetail(id)
 
     if (!borrowDetails) {
         throw new Error('There is no such Id')
     }
-    if (borrowDetails.status == BORROW_STATUS[1]) {
+
+    const { memberId, librarianId, dueDate, status } = borrowDetails
+    const renewDate = new Date()
+
+    if (status == BORROW_STATUS.returned) {
         throw new Error('Book Already returned')
     }
 
-    const renewDate = new Date(Date.now())
-    const dueDate = getDueDate()
-    const data = { renewingDate: renewDate, dueDate }
+    //fine
+    if (dueDate < renewDate) {
+        // here call fineRepository for add fine
+        await addFineService({ borrowId: id, memberId, librarianId, dueDate })
+        throw new Error('book is already in over Due ')
+    }
+    const newDueDate = getDueDate()
+    const data = { renewingDate: renewDate, dueDate: newDueDate }
     console.log(data)
     const renewService = await updateDetails(id, data)
     console.log(renewDate)

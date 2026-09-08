@@ -13,11 +13,11 @@ function authMiddleware(req, res, next) {
             next()
         } catch (error) {
             console.log(error)
-            res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.INV_TOKEN)
+            res.fail(MESSAGES.INV_TOKEN, STATUS_CODES.UN_AUTHORIZED)
         }
     } else {
         //messages
-        res.status(STATUS_CODES.UN_AUTHORIZED).json(MESSAGES.AUTH_FAIL)
+        res.fail(MESSAGES.INV_TOKEN, STATUS_CODES.UN_AUTHORIZED)
     }
 }
 module.exports = authMiddleware

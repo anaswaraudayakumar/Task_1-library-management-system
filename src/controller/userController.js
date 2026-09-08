@@ -11,30 +11,18 @@ async function registerController(req, res) {
     console.log('Inside register controller')
     try {
         const user = await registerUser(req.body)
-        res.status(STATUS_CODES.CREATED).json({
-            success: true,
-            message: MESSAGES.REGISTER_SUCCESS,
-            data: user,
-        })
+        res.success(MESSAGES.REGISTER_SUCCESS, user, STATUS_CODES.CREATED)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json(error.message)
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 async function loginController(req, res) {
     console.log('Inside loginController')
     try {
         const userInfo = await loginUser(req.body)
-
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.LOGIN_SUCCESS,
-            data: userInfo,
-        })
+        res.success(MESSAGES.LOGIN_SUCCESS, userInfo, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 // user edit by admin controller
@@ -44,16 +32,9 @@ async function userEditController(req, res) {
     const userData = req.body
     try {
         const updatedUser = await updateUserByAdmin(id, userData)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.UPDATE_SUCCESS,
-            data: updatedUser,
-        })
+        res.success(MESSAGES.UPDATE_SUCCESS, updatedUser, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 
@@ -61,16 +42,9 @@ async function getAllUserController(req, res) {
     console.log('Inside getAllUserController')
     try {
         const users = await getAllUsers(req.query)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.GET_ALL,
-            data: users,
-        })
+        res.success(MESSAGES.GET_ALL, users, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
 

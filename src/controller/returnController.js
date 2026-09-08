@@ -1,21 +1,34 @@
 const MESSAGES = require('../constants/messages')
 const STATUS_CODES = require('../constants/statusCodes')
+const { finePayService, getAllFineService } = require('../services/fineService')
 const { addReturnService } = require('../services/returnService')
 
 async function returnController(req, res) {
     const { id } = req.params
     try {
         const returnResult = await addReturnService(id)
-        res.status(STATUS_CODES.OK).json({
-            success: true,
-            message: MESSAGES.RETURN,
-            data: returnResult,
-        })
+        res.success(MESSAGES.RETURN, returnResult, STATUS_CODES.OK)
     } catch (error) {
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error.message,
-        })
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
     }
 }
-module.exports = { returnController }
+
+async function fineController(req, res) {
+    const { id } = req.params
+    try {
+        const finePay = await finePayService(id)
+        res.success(MESSAGES.INE_PAY_SUCCESS, finePay, STATUS_CODES.OK)
+    } catch (error) {
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
+    }
+}
+async function getAllFineController(req, res) {
+    const { memberId } = req.query
+    try {
+        const findAll = await getAllFineService(memberId)
+        res.success(MESSAGES.GET_ALL, findAll, STATUS_CODES.OK)
+    } catch (error) {
+        res.fail(error.message, STATUS_CODES.BAD_REQUEST)
+    }
+}
+module.exports = { returnController, fineController, getAllFineController }

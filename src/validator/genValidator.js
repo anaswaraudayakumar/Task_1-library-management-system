@@ -6,10 +6,7 @@ function genValidator(req, res, next) {
     const error = validator(req, SCHEMA)
     if (error) {
         console.log(error)
-        return res.status(STATUS_CODES.BAD_REQUEST).json({
-            success: false,
-            message: error,
-        })
+        res.fail(error, STATUS_CODES.BAD_REQUEST)
     }
     next()
 }
