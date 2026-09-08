@@ -7,6 +7,7 @@ const {
     removeOneBook,
 } = require('../repositories/bookRepository')
 const cacheService = require('../services/cacheService')
+const cacheKey = require('../utility/cacheKey')
 
 async function createBookService(data, librarianId) {
     const {
@@ -23,7 +24,6 @@ async function createBookService(data, librarianId) {
         publisher,
     } = data
     const addedBy = librarianId
-
     const existingBook = await getOneBook(bookName, librarianId)
 
     if (existingBook) {
@@ -52,9 +52,6 @@ async function createBookService(data, librarianId) {
         publisher,
         addedBy,
     })
-    const key = `bookId-${newBook._id}`
-    await cacheService.save(key, newBook)
-
     return newBook
 }
 
@@ -72,13 +69,12 @@ async function getAllBooksService(query, id) {
 //for viewing one book
 async function getOneBookService(bookId, librarianId) {
     //id= librarianId
-    const key = `bookId-${bookId}`
+    const key = cacheKey(bookId)
     let book = await cacheService.get(key)
     console.log(book)
 
     if (!book) {
         book = await getOneBookById(bookId, librarianId)
-        await cacheService.save(key, book)
     }
 
     if (!book) {
@@ -88,7 +84,7 @@ async function getOneBookService(bookId, librarianId) {
 }
 //remove book
 async function removeBookService(bookId, librarianId) {
-    const key = `bookId-${bookId}`
+    const key = cacheKey(bookId)
     let book = await cacheService.get(key)
     if (!book) {
         book = await getOneBookById(bookId, librarianId)
@@ -97,12 +93,11 @@ async function removeBookService(bookId, librarianId) {
         throw new Error("can't find that book")
     }
     const removeBook = await removeOneBook(bookId)
-    await cacheService.remove(key)
     return removeBook
 }
 // updateBook
 async function updateBookService(bookId, librarianId, data) {
-    const key = `bookId-${bookId}`
+    const key = cacheKey(bookId)
     let book = await cacheService.get(key)
     if (!book) {
         book = await getOneBookById(bookId, librarianId)
@@ -111,7 +106,6 @@ async function updateBookService(bookId, librarianId, data) {
         throw new Error("can't find that book")
     }
     const updateBook = await updateOneBook(bookId, data)
-    await cacheService.save(key, book)
     return updateBook
 }
 
