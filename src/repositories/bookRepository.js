@@ -1,10 +1,20 @@
 const mongoose = require('mongoose')
 const Book = require('../models/bookModel')
 const pagination = require('../utility/paginationFun')
+const cacheKey = require('../utility/cacheKey')
+const cacheService = require('../services/cacheService')
 
 //add book
 async function addBook(bookData) {
     const createBook = await Book.create(bookData)
+    //cache
+    try {
+        const key = cacheKey.book(createBook._id)
+        await cacheService.save(key, createBook)
+    } catch (error) {
+        console.log(error)
+        console.error('Cache save failed:', error.message)
+    }
     return createBook
 }
 
@@ -111,12 +121,23 @@ async function getBooks(query, librarianId) {
 
 //get one book
 async function getOneBook(name, librarianId) {
-    const findBook = await Book.findOne(
-        { bookName: name },
-        { addedBy: librarianId }
-    )
+    const findBook = await Book.findOne({
+        bookName: name,
+        addedBy: librarianId,
+    })
         .populate('author')
         .populate('category')
+    //cache
+    if (findBook) {
+        try {
+            const key = cacheKey.book(findBook._id)
+            await cacheService.save(key, findBook)
+        } catch (error) {
+            console.log(error)
+            console.error('Cache save failed:', error.message)
+        }
+    }
+
     return findBook
 }
 
@@ -125,6 +146,9 @@ async function getOneBookById(id) {
     const findBook = await Book.findOne({ _id: id })
         .populate('author')
         .populate('category')
+    //cache
+    const key = cacheKey.book(id)
+    await cacheService.save(key, findBook)
     return findBook
 }
 
@@ -133,6 +157,9 @@ async function updateOneBook(id, bookData) {
     const editBook = await Book.findByIdAndUpdate({ _id: id }, bookData, {
         returnDocument: 'after',
     })
+    //cache
+    const key = cacheKey.book(id)
+    await cacheService.save(key, editBook)
     return editBook
 }
 
@@ -142,6 +169,9 @@ async function removeOneBook(id) {
         { isDeleted: true },
         { new: true }
     )
+    //cache
+    const key = cacheKey.book(id)
+    await cacheService.remove(key)
     return removeBook
 }
 module.exports = {
