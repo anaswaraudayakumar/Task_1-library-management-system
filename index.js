@@ -26,7 +26,7 @@ server.use(routes)
 
 //error handling
 server.use((err, req, res, next) => {
-    res.status(500).json(err.message)
+    res.fail(err.message)
 })
 
 const PORT = process.env.PORT
